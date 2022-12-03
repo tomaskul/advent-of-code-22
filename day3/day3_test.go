@@ -57,7 +57,6 @@ func Test_FindMatch_MatchesExpected(t *testing.T) {
 	}
 }
 
-/*
 func Test_GetItemPriority_MatchesExpected(t *testing.T) {
 	for input, expected := range testInputs {
 		t.Run(input, func(t *testing.T) {
@@ -81,17 +80,3 @@ func Test_GetItemPriority_MatchesExpected(t *testing.T) {
 		})
 	}
 }
-
-func Test_TestLetters(t *testing.T) {
-	fmt.Printf("[]byte(\"a\"): %v\n", []byte("a"))
-	fmt.Printf("[]byte(\"z\"): %v\n", []byte("z"))
-	fmt.Printf("[]byte(\"A\"): %v\n", []byte("A"))
-	fmt.Printf("[]byte(\"Z\"): %v\n", []byte("Z"))
-
-	in, _ := strconv.Atoi("a")
-	aaaa := in - int(50)
-
-	fmt.Printf("%d - 50: %d\n", in, aaaa)
-	t.Errorf("nope")
-}
-*/
