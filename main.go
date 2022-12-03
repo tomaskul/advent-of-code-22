@@ -44,5 +44,7 @@ func main() {
 	case 3:
 		fmt.Printf("\t=== Part 1 ===\n")
 		day3.DayThreePt1(sessionCookie)
+		fmt.Printf("\n\t=== Part 2 ===\n")
+		day3.DayThreePt2(sessionCookie)
 	}
 }

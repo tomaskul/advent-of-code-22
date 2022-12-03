@@ -45,13 +45,33 @@ func Test_FindMatch_MatchesExpected(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Unexpected error: %v", err)
 			}
-			actual, err := findMatch(compartments[0], compartments[1])
+			actual, err := findMatch(compartments[0], compartments[1], "")
 			if err != nil {
 				t.Fatalf("Unexpected error: %v", err)
 			}
 
 			if expected.Match != actual {
 				t.Errorf("Expected: '%q', got: '%q'", expected.Match, actual)
+			}
+		})
+	}
+}
+
+func Test_FindMatchThreeInputs_MatchExpected(t *testing.T) {
+	testCases := map[rune][]string{
+		'r': {"vJrwpWtwJgWrhcsFMMfFFhFp", "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", "PmmdzqPrVvPwwTWBwg"},
+		'Z': {"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", "ttgJtRGJQctTZtZT", "CrZsJsPPZsGzwwsLwLmpwMDw"},
+	}
+
+	for expected, input := range testCases {
+		t.Run(string(expected), func(t *testing.T) {
+			actual, err := findMatch(input[0], input[1], input[2])
+			if err != nil {
+				t.Fatalf("Unexpected error: %v", err)
+			}
+
+			if expected != actual {
+				t.Errorf("Expected: %q, got: %q", expected, actual)
 			}
 		})
 	}
@@ -64,7 +84,7 @@ func Test_GetItemPriority_MatchesExpected(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Unexpected error: %v", err)
 			}
-			match, err := findMatch(compartments[0], compartments[1])
+			match, err := findMatch(compartments[0], compartments[1], "")
 			if err != nil {
 				t.Fatalf("Unexpected error: %v", err)
 			}
@@ -78,5 +98,22 @@ func Test_GetItemPriority_MatchesExpected(t *testing.T) {
 				t.Errorf("Expected: %d, got: %d", expected.MatchPriority, actual)
 			}
 		})
+	}
+}
+
+func Test_GetGroupRucksacks_MatchesExpected(t *testing.T) {
+	input := []string{
+		"vJrwpWtwJgWrhcsFMMfFFhFp",
+		"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+		"PmmdzqPrVvPwwTWBwg",
+		"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
+		"ttgJtRGJQctTZtZT",
+		"CrZsJsPPZsGzwwsLwLmpwMDw",
+	}
+
+	actual := getGroupRucksacks(input)
+
+	if len(actual) != 2 {
+		t.Errorf("Expected 2 groups, got: %d", len(actual))
 	}
 }
