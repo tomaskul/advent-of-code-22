@@ -6,9 +6,10 @@ import (
 	"os"
 
 	"github.com/tomaskul/advent-of-code-22/day1"
+	"github.com/tomaskul/advent-of-code-22/day2"
 )
 
-const DaysSolved = 1
+const DaysSolved = 2
 
 func main() {
 	var sessionCookie string
@@ -32,5 +33,11 @@ func main() {
 		day1.DayOnePt1(sessionCookie)
 		fmt.Printf("\n\t=== Part 2 ===\n")
 		day1.DayOnePt2(sessionCookie)
+
+	case 2:
+		fmt.Printf("\t=== Part 1 ===\n")
+		day2.DayTwoPt1(sessionCookie)
+		fmt.Printf("\n\t=== Part 2 ===\n")
+		day2.DayTwoPt2(sessionCookie)
 	}
 }
