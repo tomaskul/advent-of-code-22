@@ -10,20 +10,23 @@ import (
 
 const inputUrl = "https://adventofcode.com/2022/day/1/input"
 
-func DayOnePt1(sessionCookie string) {
+func Solution(sessionCookie, pt1Text, pt2Text string) {
 	data, _ := util.GetData(inputUrl, sessionCookie)
 	totals, _ := parseData(data)
 
-	fmt.Println("Finding the Elf carrying the most Calories...")
+	fmt.Printf(pt1Text)
+	dayOnePt1(totals)
+	fmt.Printf(pt2Text)
+	dayOnePt2(totals)
+}
 
+func dayOnePt1(totals []int) {
+	fmt.Println("Finding the Elf carrying the most Calories...")
 	highest, _ := findHighest(totals)
 	fmt.Printf("Elf carrying most Calories, is carrying: %d calories.\n", highest)
 }
 
-func DayOnePt2(sessionCookie string) {
-	data, _ := util.GetData(inputUrl, sessionCookie)
-	totals, _ := parseData(data)
-
+func dayOnePt2(totals []int) {
 	fmt.Printf("Find the top three Elves carrying the most Calories...\n=== Top 3 ===\n")
 
 	top1, top1Index := findHighest(totals)

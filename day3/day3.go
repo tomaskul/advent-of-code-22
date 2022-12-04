@@ -8,10 +8,17 @@ import (
 	"github.com/tomaskul/advent-of-code-22/util"
 )
 
-func DayThreePt1(sessionCookie string) {
+func Solution(sessionCookie, pt1Text, pt2Text string) {
 	dataBytes, _ := util.GetData("https://adventofcode.com/2022/day/3/input", sessionCookie)
 	rucksacks := strings.Split(string(dataBytes), "\n")
 
+	fmt.Printf(pt1Text)
+	dayThreePt1(rucksacks)
+	fmt.Printf(pt2Text)
+	dayThreePt2(rucksacks)
+}
+
+func dayThreePt1(rucksacks []string) {
 	fmt.Println("Finding the items type that appears in both compartments of each rucksack...")
 	sum := 0
 	for index, rucksack := range rucksacks {
@@ -42,10 +49,7 @@ func DayThreePt1(sessionCookie string) {
 	fmt.Printf("Sum of the priorities of those item types: %d\n", sum)
 }
 
-func DayThreePt2(sessionCookie string) {
-	dataBytes, _ := util.GetData("https://adventofcode.com/2022/day/3/input", sessionCookie)
-	rucksacks := strings.Split(string(dataBytes), "\n")
-
+func dayThreePt2(rucksacks []string) {
 	fmt.Println("Finding the item types that corresponds to the badges of each three-Elf group...")
 	groups := getGroupRucksacks(rucksacks)
 	sum := 0

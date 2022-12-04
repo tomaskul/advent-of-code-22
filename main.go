@@ -11,7 +11,12 @@ import (
 	"github.com/tomaskul/advent-of-code-22/day4"
 )
 
-const DaysSolved = 4
+const (
+	DaysSolved = 4
+
+	Part1Text = "\t=== Part 1 ===\n"
+	Part2Text = "\n\t=== Part 2 ===\n"
+)
 
 func main() {
 	var sessionCookie string
@@ -31,22 +36,11 @@ func main() {
 
 	switch day {
 	case 1:
-		fmt.Printf("\t=== Part 1 ===\n")
-		day1.DayOnePt1(sessionCookie)
-		fmt.Printf("\n\t=== Part 2 ===\n")
-		day1.DayOnePt2(sessionCookie)
-
+		day1.Solution(sessionCookie, Part1Text, Part2Text)
 	case 2:
-		fmt.Printf("\t=== Part 1 ===\n")
-		day2.DayTwoPt1(sessionCookie)
-		fmt.Printf("\n\t=== Part 2 ===\n")
-		day2.DayTwoPt2(sessionCookie)
-
+		day2.Solution(sessionCookie, Part1Text, Part2Text)
 	case 3:
-		fmt.Printf("\t=== Part 1 ===\n")
-		day3.DayThreePt1(sessionCookie)
-		fmt.Printf("\n\t=== Part 2 ===\n")
-		day3.DayThreePt2(sessionCookie)
+		day3.Solution(sessionCookie, Part1Text, Part2Text)
 
 	case 4:
 		fmt.Printf("\t=== Part 1 ===\n")

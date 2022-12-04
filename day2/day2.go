@@ -27,18 +27,17 @@ var charLookup = map[string]int{
 	"Z": 2,
 }
 
-func DayTwoPt1(sessionCookie string) {
-	core(sessionCookie, evaluatePt1)
-}
-
-func DayTwoPt2(sessionCookie string) {
-	core(sessionCookie, evaluatePt2)
-}
-
-func core(sessionCookie string, evalFunc func(string, string) (int, int, error)) {
+func Solution(sessionCookie, pt1Text, pt2Text string) {
 	bytes, _ := util.GetData("https://adventofcode.com/2022/day/2/input", sessionCookie)
 	rounds := strings.Split(string(bytes), "\n")
 
+	fmt.Printf(pt1Text)
+	solve(rounds, evaluatePt1)
+	fmt.Printf(pt2Text)
+	solve(rounds, evaluatePt2)
+}
+
+func solve(rounds []string, evalFunc func(string, string) (int, int, error)) {
 	opponentScore, myScore := 0, 0
 	for _, round := range rounds {
 		parts := strings.Split(round, " ")
