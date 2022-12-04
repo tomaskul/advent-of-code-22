@@ -8,9 +8,10 @@ import (
 	"github.com/tomaskul/advent-of-code-22/day1"
 	"github.com/tomaskul/advent-of-code-22/day2"
 	"github.com/tomaskul/advent-of-code-22/day3"
+	"github.com/tomaskul/advent-of-code-22/day4"
 )
 
-const DaysSolved = 3
+const DaysSolved = 4
 
 func main() {
 	var sessionCookie string
@@ -46,5 +47,11 @@ func main() {
 		day3.DayThreePt1(sessionCookie)
 		fmt.Printf("\n\t=== Part 2 ===\n")
 		day3.DayThreePt2(sessionCookie)
+
+	case 4:
+		fmt.Printf("\t=== Part 1 ===\n")
+		day4.DayFourPt1(sessionCookie)
+		//fmt.Printf("\n\t=== Part 2 ===\n")
+		//day4.DayFourPt2(sessionCookie)
 	}
 }

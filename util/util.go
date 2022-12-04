@@ -3,6 +3,7 @@ package util
 import (
 	"io"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -25,4 +26,15 @@ func GetData(url, sessionCookie string) ([]byte, error) {
 	}
 
 	return io.ReadAll(response.Body)
+}
+
+// GetData sends a HTTP GET request using auth session cookie to
+// specified (advent of code) URL and splits data into rows (\n delimitated).
+func GetRows(url, sessionCookie string) []string {
+	bytes, err := GetData(url, sessionCookie)
+	if err != nil {
+		return []string{}
+	}
+
+	return strings.Split(string(bytes), "\n")
 }
