@@ -41,11 +41,7 @@ func main() {
 		day2.Solution(sessionCookie, Part1Text, Part2Text)
 	case 3:
 		day3.Solution(sessionCookie, Part1Text, Part2Text)
-
 	case 4:
-		fmt.Printf("\t=== Part 1 ===\n")
-		day4.DayFourPt1(sessionCookie)
-		//fmt.Printf("\n\t=== Part 2 ===\n")
-		//day4.DayFourPt2(sessionCookie)
+		day4.Solution(sessionCookie, Part1Text, Part2Text)
 	}
 }
