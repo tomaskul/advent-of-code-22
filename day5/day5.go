@@ -16,11 +16,16 @@ type Instruction struct {
 
 func Solution(sessionCookie, pt1Text, _ string) {
 	fmt.Printf(pt1Text)
-	setInitialState()
-	instructions := getInstructions(sessionCookie)
 
-	fmt.Printf("%v\n", instructions[0])
-	fmt.Printf("%v\n", instructions[len(instructions)-1])
+	instructions := getInstructions(sessionCookie)
+	//fmt.Printf("%v\n", instructions[0])
+	//fmt.Printf("%v\n", instructions[len(instructions)-1])
+	state := executeInstructions(setInitialState(), instructions)
+	fmt.Printf("Top of each stack: ")
+	for i := 1; i < len(state)+1; i++ {
+		fmt.Printf("%s", state[i].Pop())
+	}
+	fmt.Println()
 }
 
 func setInitialState() map[int]*util.Stack {
@@ -84,4 +89,44 @@ func newInstruction(instructionText string) *Instruction {
 		From: from,
 		To:   to,
 	}
+}
+
+func executeInstructions(state map[int]*util.Stack, instructions []*Instruction) map[int]*util.Stack {
+	for _, instruction := range instructions {
+		for i := 0; i < instruction.Move; i++ {
+			state[instruction.To].Push(state[instruction.From].Pop())
+		}
+	}
+	return state
+}
+
+func printState(state map[int]*util.Stack) {
+	for i := 1; i < len(state)+1; i++ {
+		fmt.Printf("%d ", i)
+
+		items := []string{}
+		for state[i].Len() > 0 {
+			items = append(items, fmt.Sprintf("%s", state[i].Pop()))
+		}
+
+		for _, v := range reverse(strings.Join(items, "")) {
+			fmt.Printf("[%q]", v)
+		}
+		fmt.Println()
+	}
+}
+
+// function, which takes a string as
+// argument and return the reverse of string.
+func reverse(s string) string {
+	rns := []rune(s) // convert to rune
+	for i, j := 0, len(rns)-1; i < j; i, j = i+1, j-1 {
+
+		// swap the letters of the string,
+		// like first with last and so on.
+		rns[i], rns[j] = rns[j], rns[i]
+	}
+
+	// return the reversed string.
+	return string(rns)
 }
