@@ -71,9 +71,9 @@ func isPartialOverlap(elf1Assignment, elf2Assignment *CleanUpAssignment) bool {
 		return true
 	}
 
-	if (elf1Assignment.LowerBound >= elf2Assignment.LowerBound && elf1Assignment.UpperBound >= elf2Assignment.UpperBound) ||
-		(elf2Assignment.LowerBound >= elf1Assignment.LowerBound && elf2Assignment.UpperBound >= elf1Assignment.UpperBound) {
+	if elf1Assignment.UpperBound >= elf2Assignment.LowerBound && elf1Assignment.LowerBound <= elf2Assignment.UpperBound {
 		return true
 	}
+
 	return false
 }
