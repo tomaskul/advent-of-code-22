@@ -17,14 +17,13 @@ func Solution(sessionCookie, pt1Text, pt2Text string) {
 	pairs := util.GetRows("https://adventofcode.com/2022/day/4/input", sessionCookie)
 
 	fmt.Printf(pt1Text)
-	dayFourPt1(pairs)
-	//fmt.Printf(pt2Text)
-	//dayFourPt2(pairs)
+	fmt.Printf("Full overlaps: %d\n", solve(pairs, isFullOverlap))
+	fmt.Printf(pt2Text)
+	fmt.Printf("Partial overlaps: %d\n", solve(pairs, isPartialOverlap))
 }
 
-func dayFourPt1(pairs []string) {
-	fmt.Println("Finding in how many assignment pairs does one range fully contain the other...")
-	fullOverlaps := 0
+func solve(pairs []string, evalFunc func(*CleanUpAssignment, *CleanUpAssignment) bool) int {
+	count := 0
 	for _, pair := range pairs {
 		if pair == "" {
 			continue
@@ -33,12 +32,12 @@ func dayFourPt1(pairs []string) {
 		elf1Assignment, _ := newCleanUpAssignment(assignments[0])
 		elf2Assignment, _ := newCleanUpAssignment(assignments[1])
 
-		if isFullOverlap(elf1Assignment, elf2Assignment) {
-			fullOverlaps++
+		if evalFunc(elf1Assignment, elf2Assignment) {
+			count++
 		}
 	}
 
-	fmt.Printf("Full overlaps: %d\n", fullOverlaps)
+	return count
 }
 
 func newCleanUpAssignment(assignment string) (*CleanUpAssignment, error) {
@@ -64,5 +63,17 @@ func isFullOverlap(elf1Assignment, elf2Assignment *CleanUpAssignment) bool {
 		return true
 	}
 
+	return false
+}
+
+func isPartialOverlap(elf1Assignment, elf2Assignment *CleanUpAssignment) bool {
+	if isFullOverlap(elf1Assignment, elf2Assignment) {
+		return true
+	}
+
+	if (elf1Assignment.LowerBound >= elf2Assignment.LowerBound && elf1Assignment.UpperBound >= elf2Assignment.UpperBound) ||
+		(elf2Assignment.LowerBound >= elf1Assignment.LowerBound && elf2Assignment.UpperBound >= elf1Assignment.UpperBound) {
+		return true
+	}
 	return false
 }
