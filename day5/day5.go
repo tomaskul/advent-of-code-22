@@ -14,18 +14,25 @@ type Instruction struct {
 	To   int
 }
 
-func Solution(sessionCookie, pt1Text, _ string) {
-	fmt.Printf(pt1Text)
-
+func Solution(sessionCookie, pt1Text, pt2Text string) {
 	instructions := getInstructions(sessionCookie)
-	//fmt.Printf("%v\n", instructions[0])
-	//fmt.Printf("%v\n", instructions[len(instructions)-1])
-	state := executeInstructions(setInitialState(), instructions)
+
+	fmt.Printf(pt1Text)
+	state1 := executeInstructionsViaCrateMover9000(setInitialState(), instructions)
 	fmt.Printf("Top of each stack: ")
-	for i := 1; i < len(state)+1; i++ {
-		fmt.Printf("%s", state[i].Pop())
+	for i := 1; i < len(state1)+1; i++ {
+		fmt.Printf("%s", state1[i].Pop())
 	}
 	fmt.Println()
+
+	fmt.Printf(pt2Text)
+	state2 := executeInstructionsViaCrateMover9001(setInitialState(), instructions)
+	fmt.Printf("Top of each stack: ")
+	for i := 1; i < len(state2)+1; i++ {
+		fmt.Printf("%s", state2[i].Pop())
+	}
+	fmt.Println()
+
 }
 
 func setInitialState() map[int]*util.Stack {
@@ -34,15 +41,15 @@ func setInitialState() map[int]*util.Stack {
 		4: {}, 5: {}, 6: {},
 		7: {}, 8: {}, 9: {},
 	}
-	state[1].PushMultiple([]string{"M", "J", "C", "B", "F", "R", "L", "H"})
-	state[2].PushMultiple([]string{"Z", "C", "D"})
-	state[3].PushMultiple([]string{"H", "J", "F", "C", "N", "G", "W"})
-	state[4].PushMultiple([]string{"P", "J", "D", "M", "T", "S", "B"})
-	state[5].PushMultiple([]string{"N", "C", "D", "R", "J"})
-	state[6].PushMultiple([]string{"W", "L", "D", "Q", "P", "J", "G", "Z"})
-	state[7].PushMultiple([]string{"P", "Z", "T", "F", "R", "H"})
-	state[8].PushMultiple([]string{"L", "V", "M", "G"})
-	state[9].PushMultiple([]string{"C", "B", "G", "P", "F", "Q", "R", "J"})
+	state[1].PushMultipleStrings([]string{"M", "J", "C", "B", "F", "R", "L", "H"})
+	state[2].PushMultipleStrings([]string{"Z", "C", "D"})
+	state[3].PushMultipleStrings([]string{"H", "J", "F", "C", "N", "G", "W"})
+	state[4].PushMultipleStrings([]string{"P", "J", "D", "M", "T", "S", "B"})
+	state[5].PushMultipleStrings([]string{"N", "C", "D", "R", "J"})
+	state[6].PushMultipleStrings([]string{"W", "L", "D", "Q", "P", "J", "G", "Z"})
+	state[7].PushMultipleStrings([]string{"P", "Z", "T", "F", "R", "H"})
+	state[8].PushMultipleStrings([]string{"L", "V", "M", "G"})
+	state[9].PushMultipleStrings([]string{"C", "B", "G", "P", "F", "Q", "R", "J"})
 
 	return state
 }
@@ -68,21 +75,9 @@ func newInstruction(instructionText string) *Instruction {
 		fmt.Printf("InstructionText: '%s' doesn't have enough parts to compose instruction\n", instructionText)
 		return nil
 	}
-	move, err := strconv.Atoi(parts[1])
-	if err != nil {
-		fmt.Printf("InstructionText: '%s' parts[1] err: %v\n", instructionText, err)
-		return nil
-	}
-	from, err := strconv.Atoi(parts[3])
-	if err != nil {
-		fmt.Printf("InstructionText: '%s' parts[3] err: %v\n", instructionText, err)
-		return nil
-	}
-	to, err := strconv.Atoi(parts[5])
-	if err != nil {
-		fmt.Printf("InstructionText: '%s' parts[5] err: %v\n", instructionText, err)
-		return nil
-	}
+	move, _ := strconv.Atoi(parts[1])
+	from, _ := strconv.Atoi(parts[3])
+	to, _ := strconv.Atoi(parts[5])
 
 	return &Instruction{
 		Move: move,
@@ -91,10 +86,23 @@ func newInstruction(instructionText string) *Instruction {
 	}
 }
 
-func executeInstructions(state map[int]*util.Stack, instructions []*Instruction) map[int]*util.Stack {
+func executeInstructionsViaCrateMover9000(state map[int]*util.Stack, instructions []*Instruction) map[int]*util.Stack {
 	for _, instruction := range instructions {
 		for i := 0; i < instruction.Move; i++ {
 			state[instruction.To].Push(state[instruction.From].Pop())
+		}
+	}
+	return state
+}
+
+func executeInstructionsViaCrateMover9001(state map[int]*util.Stack, instructions []*Instruction) map[int]*util.Stack {
+	for _, instruction := range instructions {
+		s := util.Stack{}
+		for i := 0; i < instruction.Move; i++ {
+			s.Push(state[instruction.From].Pop())
+		}
+		for s.Len() > 0 {
+			state[instruction.To].Push(s.Pop())
 		}
 	}
 	return state

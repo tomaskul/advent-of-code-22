@@ -22,7 +22,13 @@ func (stack *Stack) Push(value interface{}) {
 	stack.size++
 }
 
-func (stack *Stack) PushMultiple(values []string) {
+func (stack *Stack) PushMultiple(values []interface{}) {
+	for _, value := range values {
+		stack.Push(value)
+	}
+}
+
+func (stack *Stack) PushMultipleStrings(values []string) {
 	for _, value := range values {
 		stack.Push(value)
 	}
