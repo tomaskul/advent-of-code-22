@@ -10,10 +10,11 @@ import (
 	"github.com/tomaskul/advent-of-code-22/day3"
 	"github.com/tomaskul/advent-of-code-22/day4"
 	"github.com/tomaskul/advent-of-code-22/day5"
+	"github.com/tomaskul/advent-of-code-22/day6"
 )
 
 const (
-	DaysSolved = 5
+	DaysSolved = 6
 
 	Part1Text = "\t=== Part 1 ===\n"
 	Part2Text = "\n\t=== Part 2 ===\n"
@@ -46,5 +47,7 @@ func main() {
 		day4.Solution(sessionCookie, Part1Text, Part2Text)
 	case 5:
 		day5.Solution(sessionCookie, Part1Text, Part2Text)
+	case 6:
+		day6.Solution(sessionCookie, Part1Text, Part2Text)
 	}
 }
