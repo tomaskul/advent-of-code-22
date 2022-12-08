@@ -11,6 +11,7 @@ import (
 	"github.com/tomaskul/advent-of-code-22/day4"
 	"github.com/tomaskul/advent-of-code-22/day5"
 	"github.com/tomaskul/advent-of-code-22/day6"
+	"github.com/tomaskul/advent-of-code-22/day7"
 	"github.com/tomaskul/advent-of-code-22/day8"
 )
 
@@ -51,7 +52,7 @@ func main() {
 	case 6:
 		day6.Solution(sessionCookie, Part1Text, Part2Text)
 	case 7:
-		fmt.Println("Solution not in this repo...")
+		day7.Solution(sessionCookie, Part1Text, Part2Text)
 	case 8:
 		day8.Solution(sessionCookie, Part1Text, Part2Text)
 	}

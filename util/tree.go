@@ -62,8 +62,8 @@ func (d Dirs) Swap(i, j int) {
 
 type FileNode struct {
 	Name   string
-	parent Node
 	Size   int
+	parent Node
 }
 
 func (n *FileNode) GetName() string {
