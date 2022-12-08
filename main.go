@@ -11,10 +11,11 @@ import (
 	"github.com/tomaskul/advent-of-code-22/day4"
 	"github.com/tomaskul/advent-of-code-22/day5"
 	"github.com/tomaskul/advent-of-code-22/day6"
+	"github.com/tomaskul/advent-of-code-22/day8"
 )
 
 const (
-	DaysSolved = 6
+	DaysSolved = 8
 
 	Part1Text = "\t=== Part 1 ===\n"
 	Part2Text = "\n\t=== Part 2 ===\n"
@@ -49,5 +50,9 @@ func main() {
 		day5.Solution(sessionCookie, Part1Text, Part2Text)
 	case 6:
 		day6.Solution(sessionCookie, Part1Text, Part2Text)
+	case 7:
+		fmt.Println("Solution not in this repo...")
+	case 8:
+		day8.Solution(sessionCookie, Part1Text, Part2Text)
 	}
 }
