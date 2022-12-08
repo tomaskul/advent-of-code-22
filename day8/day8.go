@@ -18,7 +18,12 @@ func Solution(sessionCookie, pt1Text, pt2Text string) {
 
 	heightGrid := getHeightGrid(sessionCookie)
 
-	_, visibleFromOutside := getVisibilityGrid(heightGrid)
+	grid, visibleFromOutside := getVisibilityGrid(heightGrid)
+	for _, v := range grid {
+		fmt.Printf("%v\n", v)
+	}
+	fmt.Printf("\n\n")
+	//fmt.Printf("%v\n\n", grid)
 	fmt.Printf("Trees visible from outside: %d\n", visibleFromOutside)
 
 	//fmt.Printf(pt2Text)
@@ -60,10 +65,13 @@ func getVisibleFromLeftAndRight(row []int) []int {
 	result := make([]int, len(row))
 	result[0], result[len(row)-1] = Visible, Visible
 
-	// Left to right (0th tree visible from left by default).
+	// Left to right.
 	tallestSoFar := row[0]
-	for i := 1; i < len(row)-1; i++ {
-		if row[i] > row[i-1] || row[i] > tallestSoFar {
+	for i := 0; i < len(row); i++ {
+		if i == 0 {
+			continue
+		}
+		if row[i] > row[i-1] && row[i] > tallestSoFar {
 			result[i] = Visible
 			tallestSoFar = row[i]
 		}
@@ -71,8 +79,11 @@ func getVisibleFromLeftAndRight(row []int) []int {
 
 	// Right to left (last tree visible from the right by default).
 	tallestSoFar = row[len(row)-1]
-	for i := len(row) - 2; i > 0; i-- {
-		if row[i] > row[i+1] || row[i] > tallestSoFar {
+	for i := len(row) - 1; i > 0; i-- {
+		if i == len(row)-1 {
+			continue
+		}
+		if row[i] > row[i+1] && row[i] > tallestSoFar {
 			result[i] = Visible
 			tallestSoFar = row[i]
 		}
@@ -84,7 +95,7 @@ func getVisibleFromTopAndBottom(heightGrid, visibilityGrid [][]int) [][]int {
 	maxY := len(heightGrid) - 1    // Final row will be picked up by bottom-to-top scan.
 	maxX := len(heightGrid[0]) - 1 // nth tree picked up by right-to-left scan.
 
-	for x := 1; x < maxX; x++ {
+	for x := 0; x < maxX; x++ {
 		// Top to bottom (0th trees picked up by left-to-right scan).
 		tallestSoFar := heightGrid[0][x]
 		for y := 0; y < maxY; y++ {
@@ -93,7 +104,7 @@ func getVisibleFromTopAndBottom(heightGrid, visibilityGrid [][]int) [][]int {
 				continue
 			}
 
-			if heightGrid[y-1][x] < heightGrid[y][x] || heightGrid[y][x] > tallestSoFar {
+			if heightGrid[y-1][x] < heightGrid[y][x] && heightGrid[y][x] > tallestSoFar {
 				visibilityGrid[y][x] = Visible
 				tallestSoFar = heightGrid[y][x]
 			} else {
@@ -109,7 +120,7 @@ func getVisibleFromTopAndBottom(heightGrid, visibilityGrid [][]int) [][]int {
 				continue
 			}
 
-			if heightGrid[y][x] > heightGrid[y+1][x] || heightGrid[y][x] > tallestSoFar {
+			if heightGrid[y][x] > heightGrid[y+1][x] && heightGrid[y][x] > tallestSoFar {
 				visibilityGrid[y][x] = Visible
 				tallestSoFar = heightGrid[y][x]
 			} else {
