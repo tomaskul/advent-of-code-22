@@ -92,8 +92,8 @@ func getVisibleFromLeftAndRight(row []int) []int {
 }
 
 func getVisibleFromTopAndBottom(heightGrid, visibilityGrid [][]int) [][]int {
-	maxY := len(heightGrid) - 1    // Final row will be picked up by bottom-to-top scan.
-	maxX := len(heightGrid[0]) - 1 // nth tree picked up by right-to-left scan.
+	maxY := len(heightGrid)
+	maxX := len(heightGrid[0])
 
 	for x := 0; x < maxX; x++ {
 		// Top to bottom (0th trees picked up by left-to-right scan).
@@ -113,9 +113,9 @@ func getVisibleFromTopAndBottom(heightGrid, visibilityGrid [][]int) [][]int {
 		}
 
 		// Bottom to top (0th trees picked up by left-to-right scan).
-		tallestSoFar = heightGrid[maxY][x]
-		for y := maxY; y > 0; y-- {
-			if y == maxY {
+		tallestSoFar = heightGrid[maxY-1][x]
+		for y := maxY - 1; y > 0; y-- {
+			if y == maxY-1 {
 				visibilityGrid[y][x] = Visible
 				continue
 			}
