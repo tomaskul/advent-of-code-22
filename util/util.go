@@ -36,5 +36,6 @@ func GetRows(url, sessionCookie string) []string {
 		return []string{}
 	}
 
-	return strings.Split(string(bytes), "\n")
+	rows := strings.Split(string(bytes), "\n")
+	return rows[:len(rows)-1]
 }
