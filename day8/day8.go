@@ -86,11 +86,12 @@ func getVisibleFromTopAndBottom(heightGrid, visibilityGrid [][]int) [][]int {
 	// Top to bottom (0th trees picked up by left-to-right scan).
 	for x := 1; x < maxX; x++ {
 		for y := 0; y < maxY; y++ {
-			if y == 0 && visibilityGrid[y][x] != Visible {
+			if y == 0 {
 				visibilityGrid[y][x] = Visible
 				continue
 			}
-			if heightGrid[y][x] < heightGrid[y+1][x] {
+
+			if heightGrid[y-1][x] < heightGrid[y][x] {
 				visibilityGrid[y][x] = Visible
 			} else {
 				break
