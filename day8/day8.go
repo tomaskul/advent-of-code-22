@@ -61,19 +61,15 @@ func getVisibleFromLeftAndRight(row []int) []int {
 
 	// Left to right (0th tree visible from left by default).
 	for i := 1; i < len(row)-1; i++ {
-		if row[i-1] < row[i] {
+		if row[i] > row[i-1] {
 			result[i] = Visible
-		} else {
-			break
 		}
 	}
 
 	// Right to left (last tree visible from the right by default).
 	for i := len(row) - 2; i > 1; i-- {
-		if row[i+1] < row[i] {
+		if row[i] > row[i+1] {
 			result[i] = Visible
-		} else {
-			break
 		}
 	}
 	return result
