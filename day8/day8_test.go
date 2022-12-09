@@ -76,3 +76,27 @@ func Test_GetVisibilityGrid_MatchesExpected(t *testing.T) {
 		})
 	}
 }
+
+/*
+func Test_FindMostScenicSpot_MatchesExpected(t *testing.T) {
+	testCases := []struct {
+		name  string
+		input [][]int
+	}{
+		{
+			name: "Example",
+			input: [][]int{
+				0: {3, 0, 3, 7, 3},
+				1: {2, 5, 5, 1, 2},
+				2: {6, 5, 3, 3, 2},
+				3: {3, 3, 5, 4, 9},
+				4: {3, 5, 3, 9, 0},
+			},
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.name, func(t *testing.T) {
+
+		})
+	}
+}*/

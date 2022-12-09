@@ -22,7 +22,8 @@ func Solution(sessionCookie, pt1Text, pt2Text string) {
 	//fmt.Printf("%v\n\n", grid)
 	fmt.Printf("Trees visible from outside: %d\n", visibleFromOutside)
 
-	//fmt.Printf(pt2Text)
+	fmt.Printf(pt2Text)
+	fmt.Printf("Highest scenic score possible: %d\n", findMostScenicSpot(heightGrid))
 }
 
 func getHeightGrid(sessionCookie string) [][]int {
@@ -134,4 +135,63 @@ func countVisible(visibleGrid [][]int) int {
 	}
 
 	return result
+}
+
+func findMostScenicSpot(heightsGrid [][]int) int {
+	highestScore := 0
+	for y := 0; y < len(heightsGrid); y++ {
+		for x := 0; x < len(heightsGrid[0]); x++ {
+			score := calculateScenicScore(y, x, heightsGrid)
+			if score > highestScore {
+				highestScore = score
+			}
+		}
+	}
+	return highestScore
+}
+
+func calculateScenicScore(y, x int, heightGrid [][]int) int {
+	leftViewingDistance, rightViewingDistance, upViewingDistance, downViewingDistance := 0, 0, 0, 0
+	currentHeight := heightGrid[y][x]
+	if x > 0 {
+		// Left viewing distance
+		for i := x; i > 0; i-- {
+			if currentHeight >= heightGrid[y][i] {
+				leftViewingDistance++
+			} else {
+				break
+			}
+		}
+	}
+	if x < len(heightGrid[0])-1 {
+		// Right viewing distance
+		for i := x; i < len(heightGrid[0]); i++ {
+			if currentHeight >= heightGrid[y][i] {
+				rightViewingDistance++
+			} else {
+				break
+			}
+		}
+	}
+	if y > 0 {
+		// Up viewing distance
+		for i := y; i > 0; i-- {
+			if currentHeight >= heightGrid[i][x] {
+				upViewingDistance++
+			} else {
+				break
+			}
+		}
+	}
+	if y < len(heightGrid)-1 {
+		// Down looking distance
+		for i := y; i < len(heightGrid); i++ {
+			if currentHeight >= heightGrid[i][x] {
+				downViewingDistance++
+			} else {
+				break
+			}
+		}
+	}
+	return leftViewingDistance * rightViewingDistance * upViewingDistance * downViewingDistance
 }
