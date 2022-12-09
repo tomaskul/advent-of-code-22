@@ -18,11 +18,7 @@ func Solution(sessionCookie, pt1Text, pt2Text string) {
 
 	heightGrid := getHeightGrid(sessionCookie)
 
-	grid, visibleFromOutside := getVisibilityGrid(heightGrid)
-	for _, v := range grid {
-		fmt.Printf("%v\n", v)
-	}
-	fmt.Printf("\n\n")
+	_, visibleFromOutside := getVisibilityGrid(heightGrid)
 	//fmt.Printf("%v\n\n", grid)
 	fmt.Printf("Trees visible from outside: %d\n", visibleFromOutside)
 
@@ -93,9 +89,8 @@ func getVisibleFromLeftAndRight(row []int) []int {
 
 func getVisibleFromTopAndBottom(heightGrid, visibilityGrid [][]int) [][]int {
 	maxY := len(heightGrid)
-	maxX := len(heightGrid[0])
 
-	for x := 0; x < maxX; x++ {
+	for x := 0; x < len(heightGrid[0]); x++ {
 		// Top to bottom (0th trees picked up by left-to-right scan).
 		tallestSoFar := heightGrid[0][x]
 		for y := 0; y < maxY; y++ {
@@ -104,11 +99,9 @@ func getVisibleFromTopAndBottom(heightGrid, visibilityGrid [][]int) [][]int {
 				continue
 			}
 
-			if heightGrid[y-1][x] < heightGrid[y][x] && heightGrid[y][x] > tallestSoFar {
+			if heightGrid[y][x] > heightGrid[y-1][x] && heightGrid[y][x] > tallestSoFar {
 				visibilityGrid[y][x] = Visible
 				tallestSoFar = heightGrid[y][x]
-			} else {
-				break
 			}
 		}
 
@@ -123,8 +116,6 @@ func getVisibleFromTopAndBottom(heightGrid, visibilityGrid [][]int) [][]int {
 			if heightGrid[y][x] > heightGrid[y+1][x] && heightGrid[y][x] > tallestSoFar {
 				visibilityGrid[y][x] = Visible
 				tallestSoFar = heightGrid[y][x]
-			} else {
-				break
 			}
 		}
 	}

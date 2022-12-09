@@ -60,7 +60,7 @@ func Test_GetVisibilityGrid_MatchesExpected(t *testing.T) {
 				5: {1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1},
 				6: {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 			},
-			ExpectedCount: 50,
+			ExpectedCount: 51,
 		},
 	}
 
