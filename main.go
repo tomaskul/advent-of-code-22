@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/tomaskul/advent-of-code-22/day1"
+	"github.com/tomaskul/advent-of-code-22/day10"
 	"github.com/tomaskul/advent-of-code-22/day2"
 	"github.com/tomaskul/advent-of-code-22/day3"
 	"github.com/tomaskul/advent-of-code-22/day4"
@@ -16,7 +17,7 @@ import (
 )
 
 const (
-	DaysSolved = 8
+	DaysSolved = 10
 
 	Part1Text = "\t=== Part 1 ===\n"
 	Part2Text = "\n\t=== Part 2 ===\n"
@@ -55,5 +56,9 @@ func main() {
 		day7.Solution(sessionCookie, Part1Text, Part2Text)
 	case 8:
 		day8.Solution(sessionCookie, Part1Text, Part2Text)
+	case 9:
+		fmt.Println("Day 9 challenge has been skipped - didn't feel like doing it.")
+	case 10:
+		day10.Solution(sessionCookie, Part1Text, Part2Text)
 	}
 }
