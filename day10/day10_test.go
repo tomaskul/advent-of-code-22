@@ -28,35 +28,62 @@ func Test_ParseInts(t *testing.T) {
 	}
 }
 
+var example_1 = []string{"noop", "addx 3", "addx -5"}
+var example_2 = []string{"addx 15", "addx -11", "addx 6", "addx -3", "addx 5", "addx -1", "addx -8", "addx 13", "addx 4",
+	"noop", "addx -1", "addx 5", "addx -1", "addx 5", "addx -1", "addx 5", "addx -1", "addx 5", "addx -1", "addx -35", "addx 1",
+	"addx 24", "addx -19", "addx 1", "addx 16", "addx -11", "noop", "noop", "addx 21", "addx -15", "noop", "noop", "addx -3",
+	"addx 9", "addx 1", "addx -3", "addx 8", "addx 1", "addx 5", "noop", "noop", "noop", "noop", "noop", "addx -36", "noop",
+	"addx 1", "addx 7", "noop", "noop", "noop", "addx 2", "addx 6", "noop", "noop", "noop", "noop", "noop", "addx 1", "noop",
+	"noop", "addx 7", "addx 1", "noop", "addx -13", "addx 13", "addx 7", "noop", "addx 1", "addx -33", "noop", "noop", "noop",
+	"addx 2", "noop", "noop", "noop", "addx 8", "noop", "addx -1", "addx 2", "addx 1", "noop", "addx 17", "addx -9", "addx 1",
+	"addx 1", "addx -3", "addx 11", "noop", "noop", "addx 1", "noop", "addx 1", "noop", "noop", "addx -13", "addx -19", "addx 1",
+	"addx 3", "addx 26", "addx -30", "addx 12", "addx -1", "addx 3", "addx 1", "noop", "noop", "noop", "addx -9", "addx 18",
+	"addx 1", "addx 2", "noop", "noop", "addx 9", "noop", "noop", "noop", "addx -1", "addx 2", "addx -37", "addx 1", "addx 3",
+	"noop", "addx 15", "addx -21", "addx 22", "addx -6", "addx 1", "noop", "addx 2", "addx 1", "noop", "addx -10", "noop", "noop",
+	"addx 20", "addx 1", "addx 2", "addx 2", "addx -6", "addx -11", "noop", "noop", "noop"}
+var puzzleInput = []string{"addx 1", "addx 4", "addx 21", "addx -20", "addx 4", "noop", "noop", "addx 5", "addx 3", "noop", "addx 2",
+	"addx 1", "noop", "noop", "addx 4", "noop", "noop", "noop", "addx 3", "addx 5", "addx 2", "addx 1", "noop", "addx -37", "addx 22",
+	"addx -4", "addx -14", "addx 2", "addx 5", "addx 3", "addx -2", "addx 2", "addx 5", "addx 2", "addx -15", "addx 32", "addx -14", "addx 5",
+	"addx 2", "addx 3", "noop", "addx -13", "addx -2", "addx 18", "addx -36", "noop", "addx 11", "addx -7", "noop", "noop", "addx 6", "addx 22",
+	"addx -21", "addx 3", "addx 2", "addx 4", "noop", "noop", "noop", "addx 5", "addx -16", "addx 17", "addx 2", "addx 5", "addx -11", "addx 15",
+	"addx -15", "addx -24", "noop", "noop", "addx 7", "addx 2", "addx -6", "addx 9", "noop", "addx 5", "noop", "addx -3", "addx 4", "addx 2",
+	"noop", "noop", "addx 7", "noop", "noop", "noop", "addx 5", "addx -28", "addx 29", "noop", "addx 3", "addx -7", "addx -29", "noop", "addx 7",
+	"addx -2", "addx 2", "addx 5", "addx 2", "addx -3", "addx 4", "addx 5", "addx 2", "addx 8", "addx -30", "addx 25", "addx 7", "noop", "noop",
+	"addx 3", "addx -2", "addx 2", "addx -10", "addx -24", "addx 2", "noop", "noop", "addx 2", "noop", "addx 3", "addx 2", "noop", "addx 3",
+	"addx 2", "addx 5", "addx 2", "noop", "addx 1", "noop", "addx 2", "addx 8", "noop", "noop", "addx -1", "addx -9", "addx 14", "noop",
+	"addx 1", "noop", "noop"}
+
 func Test_RunCycles(t *testing.T) {
 	testCases := []struct {
 		desc          string
-		instructions  []*Instruction
+		instructions  []string
 		signalAtCycle []int
 		signalValue   []int
 	}{
 		{
 			desc:          "Small example",
-			instructions:  []*Instruction{{Cycles: 1, Value: 0}, {Cycles: 2, Value: 3}, {Cycles: 2, Value: -5}},
+			instructions:  example_1,
 			signalAtCycle: []int{1, 2, 3, 4, 5, 6},
-			signalValue:   []int{1, 2, 3, 16, 20, -6}, // values: []int{1, 1, 1, 4, 4, -1}
+			signalValue:   []int{1, 2, 3, 16, 20, -6},
 		},
 		{
-			desc: "2nd example",
-			instructions: getInstructionsByValue([]int{15, -11, 6, -3, 5, -1, 8, 13, 4, 0, -1, 5, -1,
-				5, -1, 5, -1, 5, -1, -35, 1, 24, -19, 1, 16, -11, 0, 0, 21, -15, 0, 0, -3, 9, 1, -3, 8, 1, 5,
-				0, 0, 0, 0, 0, -36, 0, 1, 7, 0, 0, 0, 2, 6, 0, 0, 0, 0, 0, 1, 0, 0, 7, 1, 0, -13, 13, 7, 0, 1,
-				-33, 0, 0, 0, 2, 0, 0, 0, 8, 0, -1, 2, 1, 0, 17, -9, 1, 1, -3, 11, 0, 0, 1, 0, 1, 0, 0, -13,
-				-19, 1, 3, 26, -30, 12, -1, 3, 1, 0, 0, 0, -9, 18, 1, 2, 0, 0, 9, 0, 0, 0, -1, 2, -37, 1, 3, 0,
-				15, -21, 22, -6, 1, 0, 2, 1, 0, -10, 0, 0, 20, 1, 2, 2, -6, -11, 0, 0, 0}),
+			desc:          "2nd example",
+			instructions:  example_2,
 			signalAtCycle: []int{20, 60, 100, 140, 180, 220},
 			signalValue:   []int{420, 1140, 1800, 2940, 2880, 3960},
+		},
+		{
+			desc:          "puzzle input",
+			instructions:  puzzleInput,
+			signalAtCycle: []int{20, 60, 100, 140, 180, 220},
+			signalValue:   []int{0, 0, 0, 0, 0, 0},
 		},
 	}
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
 			defer Reset()
-			actual := runCycles(tC.instructions, tC.signalAtCycle)
+
+			actual := runCycles(parseInstructions(tC.instructions), tC.signalAtCycle)
 			if len(actual) != len(tC.signalAtCycle) {
 				t.Fatalf("Expected: %d, got: %d", len(tC.signalAtCycle), len(actual))
 			}
@@ -65,18 +92,4 @@ func Test_RunCycles(t *testing.T) {
 			}
 		})
 	}
-}
-
-func getInstructionsByValue(values []int) []*Instruction {
-	result := make([]*Instruction, len(values))
-	for i := 0; i < len(values); i++ {
-		var instruction *Instruction
-		if values[i] == 0 {
-			instruction = &Instruction{Cycles: 1, Value: 0}
-		} else {
-			instruction = &Instruction{Cycles: 2, Value: values[i]}
-		}
-		result[i] = instruction
-	}
-	return result
 }

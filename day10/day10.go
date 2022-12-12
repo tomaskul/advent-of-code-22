@@ -17,10 +17,16 @@ type Instruction struct {
 var registerX = 1
 
 func Solution(sessionCookie, pt1Text, pt2Text string) {
-	input := util.GetRows("https://adventofcode.com/2022/day/8/input", sessionCookie)
+	input := util.GetRows("https://adventofcode.com/2022/day/10/input", sessionCookie)
 	instructions := parseInstructions(input)
-	runCycles(instructions, []int{20, 60, 100, 140, 180, 220})
-	//fmt.Printf(pt1Text)
+	fmt.Printf(pt1Text)
+	output := runCycles(instructions, []int{20, 60, 100, 140, 180, 220})
+	sum := 0
+	for _, v := range output {
+		sum += v
+	}
+	fmt.Printf("Sum of 20, 60, 100, 140, 180, 220 signal strengths: %d\n", sum)
+
 	//fmt.Printf(pt2Text)
 }
 
