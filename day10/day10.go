@@ -14,7 +14,7 @@ type Instruction struct {
 	Cycles int
 }
 
-var registerX = 0
+var registerX = 1
 
 func Solution(sessionCookie, pt1Text, pt2Text string) {
 	input := util.GetRows("https://adventofcode.com/2022/day/8/input", sessionCookie)
@@ -83,5 +83,5 @@ func getSignalStrength(cycleNumber int) int {
 
 // Resets day 10 solution state.
 func Reset() {
-	registerX = 0
+	registerX = 1
 }
