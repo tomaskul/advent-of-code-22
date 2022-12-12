@@ -19,15 +19,16 @@ var registerX = 1
 func Solution(sessionCookie, pt1Text, pt2Text string) {
 	input := util.GetRows("https://adventofcode.com/2022/day/10/input", sessionCookie)
 	instructions := parseInstructions(input)
-	fmt.Printf(pt1Text)
-	output := runCycles(instructions, []int{20, 60, 100, 140, 180, 220})
+	output := runCycles(instructions, []int{20, 60, 100, 140, 180, 220}, nil)
 	sum := 0
 	for _, v := range output {
 		sum += v
 	}
+	fmt.Printf(pt1Text)
 	fmt.Printf("Sum of 20, 60, 100, 140, 180, 220 signal strengths: %d\n", sum)
 
-	//fmt.Printf(pt2Text)
+	fmt.Printf(pt2Text)
+	runCycles(instructions, []int{40, 80, 120, 160, 200, 240}, renderSignalToConsole)
 }
 
 func parseInstructions(instructions []string) []*Instruction {
@@ -54,7 +55,7 @@ func parseInstructions(instructions []string) []*Instruction {
 	return result
 }
 
-func runCycles(instructions []*Instruction, signalAtCycle []int) []int {
+func runCycles(instructions []*Instruction, signalAtCycle []int, renderFunc func(int, int)) []int {
 	signalAtValues := []int{}
 	cycleCounter := 0
 	timeout := time.Now().Add(time.Minute * 5)
@@ -75,16 +76,42 @@ func runCycles(instructions []*Instruction, signalAtCycle []int) []int {
 
 		// Log - not part of cycle logic.
 		if signalAtCycle[0] == cycleCounter {
-			signalAtValues = append(signalAtValues, getSignalStrength(cycleCounter))
+			signalAtValues = append(signalAtValues, registerX*cycleCounter)
 			signalAtCycle = append(signalAtCycle[1:], signalAtCycle[0])
+		}
+
+		if renderFunc != nil {
+			renderFunc(registerX, cycleCounter)
 		}
 	}
 
 	return signalAtValues
 }
 
-func getSignalStrength(cycleNumber int) int {
-	return registerX * cycleNumber
+func renderSignalToConsole(xPos, cycleCounter int) {
+	screenWidth := 40
+	if isPixelLit(xPos, cycleCounter, screenWidth) {
+		fmt.Print("#")
+	} else {
+		fmt.Print(".")
+	}
+
+	if isNewLine(cycleCounter, screenWidth) {
+		fmt.Println()
+	}
+}
+
+func isNewLine(cycleCounter, screenWidth int) bool {
+	return cycleCounter == screenWidth || cycleCounter == screenWidth*2 || cycleCounter == screenWidth*3 ||
+		cycleCounter == screenWidth*4 || cycleCounter == screenWidth*5 || cycleCounter == screenWidth*6
+}
+
+func isPixelLit(xPos, cycleCounter, screenWidth int) bool {
+	if cycleCounter == xPos-1 || cycleCounter == xPos || cycleCounter == xPos+1 ||
+		cycleCounter-screenWidth == xPos-1 || cycleCounter-screenWidth == xPos || cycleCounter-screenWidth == xPos+1 {
+		return true
+	}
+	return false
 }
 
 // Resets day 10 solution state.

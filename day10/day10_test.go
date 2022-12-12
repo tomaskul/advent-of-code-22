@@ -76,14 +76,14 @@ func Test_RunCycles(t *testing.T) {
 			desc:          "puzzle input",
 			instructions:  puzzleInput,
 			signalAtCycle: []int{20, 60, 100, 140, 180, 220},
-			signalValue:   []int{0, 0, 0, 0, 0, 0},
+			signalValue:   []int{420, 1260, 2100, 2380, 3780, 4620},
 		},
 	}
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
 			defer Reset()
 
-			actual := runCycles(parseInstructions(tC.instructions), tC.signalAtCycle)
+			actual := runCycles(parseInstructions(tC.instructions), tC.signalAtCycle, nil)
 			if len(actual) != len(tC.signalAtCycle) {
 				t.Fatalf("Expected: %d, got: %d", len(tC.signalAtCycle), len(actual))
 			}
