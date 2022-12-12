@@ -93,3 +93,27 @@ func Test_RunCycles(t *testing.T) {
 		})
 	}
 }
+
+func Test_RunCyles_Render(t *testing.T) {
+	testCases := []struct {
+		desc          string
+		instructions  []string
+		signalAtCycle []int
+	}{
+		{
+			desc:          "puzzle input",
+			instructions:  puzzleInput,
+			signalAtCycle: []int{40, 80, 120, 160, 200, 240},
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			defer Reset()
+
+			actual := runCycles(parseInstructions(tC.instructions), tC.signalAtCycle, renderSignalToConsole)
+			if len(actual) != len(tC.signalAtCycle) {
+				t.Fatalf("Expected: %d, got: %d", len(tC.signalAtCycle), len(actual))
+			}
+		})
+	}
+}

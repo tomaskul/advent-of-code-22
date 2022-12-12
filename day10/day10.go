@@ -107,11 +107,13 @@ func isNewLine(cycleCounter, screenWidth int) bool {
 }
 
 func isPixelLit(xPos, cycleCounter, screenWidth int) bool {
-	if cycleCounter == xPos-1 || cycleCounter == xPos || cycleCounter == xPos+1 ||
-		cycleCounter-screenWidth == xPos-1 || cycleCounter-screenWidth == xPos || cycleCounter-screenWidth == xPos+1 {
-		return true
-	}
-	return false
+	multiples := cycleCounter / screenWidth
+
+	return isSpriteVisible(xPos, (cycleCounter - (screenWidth * multiples)))
+}
+
+func isSpriteVisible(xPos, cycleCounter int) bool {
+	return cycleCounter == xPos-1 || cycleCounter == xPos || cycleCounter == xPos+1
 }
 
 // Resets day 10 solution state.
