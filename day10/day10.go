@@ -27,8 +27,9 @@ func Solution(sessionCookie, pt1Text, pt2Text string) {
 	fmt.Printf(pt1Text)
 	fmt.Printf("Sum of 20, 60, 100, 140, 180, 220 signal strengths: %d\n", sum)
 
-	fmt.Printf(pt2Text)
-	runCycles(instructions, []int{40, 80, 120, 160, 200, 240}, renderSignalToConsole)
+	// TODO: Work in progress.
+	//fmt.Printf(pt2Text)
+	//runCycles(instructions, []int{40, 80, 120, 160, 200, 240}, renderSignalToConsole)
 }
 
 func parseInstructions(instructions []string) []*Instruction {
@@ -61,7 +62,6 @@ func runCycles(instructions []*Instruction, signalAtCycle []int, renderFunc func
 	timeout := time.Now().Add(time.Minute * 5)
 	for {
 		cycleCounter++
-
 		if len(signalAtValues) == len(signalAtCycle) || time.Now().After(timeout) {
 			break
 		}
@@ -109,11 +109,9 @@ func isNewLine(cycleCounter, screenWidth int) bool {
 func isPixelLit(xPos, cycleCounter, screenWidth int) bool {
 	multiples := cycleCounter / screenWidth
 
-	return isSpriteVisible(xPos, (cycleCounter - (screenWidth * multiples)))
-}
+	adjustedCycleCounter := (cycleCounter - (screenWidth * multiples))
 
-func isSpriteVisible(xPos, cycleCounter int) bool {
-	return cycleCounter == xPos-1 || cycleCounter == xPos || cycleCounter == xPos+1
+	return adjustedCycleCounter == xPos-1 || adjustedCycleCounter == xPos || adjustedCycleCounter == xPos+1
 }
 
 // Resets day 10 solution state.

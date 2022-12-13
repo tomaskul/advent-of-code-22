@@ -101,10 +101,15 @@ func Test_RunCyles_Render(t *testing.T) {
 		signalAtCycle []int
 	}{
 		{
+			desc:          "example 2",
+			instructions:  example_2,
+			signalAtCycle: []int{40, 80, 120, 160, 200, 240},
+		},
+		/*{
 			desc:          "puzzle input",
 			instructions:  puzzleInput,
 			signalAtCycle: []int{40, 80, 120, 160, 200, 240},
-		},
+		},*/
 	}
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
